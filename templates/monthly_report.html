@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Monthly Financial Report</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #222;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .month-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .stat-box h3 {
+            margin-top: 0;
+        }
+
+        .value {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 700px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <a href="{{ url_for('dashboard') }}" class="back-button">
+            ← Back to Dashboard
+        </a>
+
+
+        <div class="card">
+
+            <h1>📄 Monthly Financial Report</h1>
+
+            <form method="GET" action="{{ url_for('monthly_report') }}" class="month-form">
+
+                <label for="month">
+                    Select Month:
+                </label>
+
+                <input type="month" id="month" name="month" value="{{ selected_month }}" required>
+
+                <button type="submit">
+                    Generate Report
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>📊 Financial Summary</h2>
+
+            <div class="stats">
+
+                <div class="stat-box">
+
+                    <h3>💰 Total Income</h3>
+
+                    <div class="value">
+                        ₹{{ "%.2f"|format(total_income) }}
+                    </div>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <h3>💸 Total Expenses</h3>
+
+                    <div class="value">
+                        ₹{{ "%.2f"|format(total_expenses) }}
+                    </div>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <h3>🏦 Savings</h3>
+
+                    <div class="value">
+                        ₹{{ "%.2f"|format(savings) }}
+                    </div>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <h3>📈 Savings Rate</h3>
+
+                    <div class="value">
+                        {{ "%.2f"|format(savings_rate) }}%
+                    </div>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <h3>🛒 Highest Spending Category</h3>
+
+                    <div class="value">
+                        {{ highest_category }}
+                    </div>
+
+                    <p>
+                        ₹{{ "%.2f"|format(highest_category_amount) }}
+                    </p>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <h3>🔢 Transactions</h3>
+
+                    <div class="value">
+                        {{ transaction_count }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>📝 Report Summary</h2>
+
+            {% if total_income > 0 %}
+
+            <p>
+                During
+                <strong>{{ selected_month }}</strong>,
+                your total income was
+                <strong>₹{{ "%.2f"|format(total_income) }}</strong>
+                and your total expenses were
+                <strong>₹{{ "%.2f"|format(total_expenses) }}</strong>.
+            </p>
+
+            <p>
+                Your savings were
+                <strong>₹{{ "%.2f"|format(savings) }}</strong>,
+                which represents a savings rate of
+                <strong>{{ "%.2f"|format(savings_rate) }}%</strong>.
+            </p>
+
+            {% else %}
+
+            <p>
+                No income has been recorded for this month.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

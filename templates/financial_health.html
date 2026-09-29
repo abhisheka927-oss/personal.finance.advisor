@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Financial Health</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .stat {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <a href="{{ url_for('dashboard') }}" class="back">
+            ← Back to Dashboard
+        </a>
+
+        <div class="card">
+
+            <h1>🏦 Financial Health</h1>
+
+            <p>Your educational financial health score is:</p>
+
+            <div class="score">
+                {{ score }}/100
+            </div>
+
+            <h2>{{ status }}</h2>
+
+            <p>
+                This indicator is based on your income,
+                expenses, savings and budget data.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>📊 Financial Summary</h2>
+
+            <p>
+                Total Income:
+                <strong>₹{{ "%.2f"|format(total_income) }}</strong>
+            </p>
+
+            <p>
+                Total Expenses:
+                <strong>₹{{ "%.2f"|format(total_expenses) }}</strong>
+            </p>
+
+            <p>
+                Savings:
+                <strong>₹{{ "%.2f"|format(savings) }}</strong>
+            </p>
+
+            <p>
+                Savings Rate:
+                <strong>{{ "%.2f"|format(savings_rate) }}%</strong>
+            </p>
+
+            <p>
+                Expense Ratio:
+                <strong>{{ "%.2f"|format(expense_ratio) }}%</strong>
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
